@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Listening Practice 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FAF7F0;
+    --rule: #DED5C0;
+    --ink: #22314F;
+    --body: #4A5568;
+    --accent: #A23B3B;
+    --muted: #9C9587;
+    --ok: #2F6B4F;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin: 0;
+    background:
+      repeating-linear-gradient(to bottom, transparent 0px, transparent 37px, var(--rule) 38px),
+      var(--paper);
+    color: var(--body);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page{ max-width: 680px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  .back{
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 28px;
+  }
+  .back:hover{ color: var(--accent); }
+
+  h1{
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: clamp(1.9rem, 5vw, 2.4rem);
+    color: var(--ink);
+    margin: 0 0 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .intro{ margin: 0 0 32px; font-size: 1rem; line-height: 1.6; max-width: 52ch; }
+
+  hr.rule{
+    border: none;
+    border-top: 2px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    height: 4px;
+    margin: 0 0 36px;
+  }
+
+  h2.section-title{
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 1.35rem;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+
+  h3.task-title{
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--accent);
+    margin: 28px 0 4px;
+  }
+
+  p.section-note{ margin: 0 0 20px; font-size: 0.92rem; color: var(--muted); }
+  p.task-instruction{ margin: 0 0 16px; font-size: 0.95rem; color: var(--body); }
+
+  .audio-group{ margin-bottom: 8px; }
+
+  .track{
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: #fff;
+    padding: 16px 18px;
+    margin-bottom: 20px;
+  }
+  .track .label{
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 0.98rem;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+  .track audio{ width: 100%; }
+
+  .student-info{
+    display: grid;
+    gap: 14px;
+    margin-bottom: 36px;
+  }
+  .student-info label{
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .student-info input{
+    width: 100%;
+    font: inherit;
+    font-size: 0.98rem;
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    border-radius: 7px;
+    background: #fff;
+    color: var(--body);
+  }
+  .student-info input:focus-visible{ outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .legend{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin: 0 0 22px;
+  }
+  .legend figure{
+    margin: 0;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: #fff;
+    overflow: hidden;
+  }
+  .legend img{
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  .legend figcaption{
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--accent);
+    padding: 6px 10px 8px;
+  }
+
+  .question{
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .question:first-child{ padding-top: 0; }
+
+  .question .q-num{
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent);
+    font-size: 1.02rem;
+    margin-right: 4px;
+  }
+
+  .question .q-text{ font-size: 0.98rem; color: var(--ink); font-weight: 500; }
+
+  .choices{ margin-top: 10px; display: grid; gap: 7px; }
+
+  .choice{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+  }
+  .choice input{ margin-top: 2px; accent-color: var(--accent); }
+
+  .text-answer{
+    margin-top: 10px;
+    width: 220px;
+    max-width: 100%;
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--body);
+  }
+  .text-answer:focus-visible{ outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .submit-row{ margin-top: 40px; }
+
+  button.submit-btn{
+    font: inherit;
+    font-weight: 600;
+    font-size: 1rem;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 28px;
+    cursor: pointer;
+  }
+  button.submit-btn:hover{ background: var(--accent); }
+  button.submit-btn:disabled{ background: var(--muted); cursor: not-allowed; }
+  button.submit-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .form-msg{ margin-top: 12px; font-size: 0.9rem; color: var(--accent); min-height: 1.2em; }
+
+  .result-panel{
+    display: none;
+    margin-top: 40px;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    background: #fff;
+    padding: 28px 26px;
+    text-align: center;
+  }
+  .result-panel.show{ display: block; }
+  .result-panel .score{
+    font-family: 'Lora', serif;
+    font-weight: 600;
+    font-size: 2.4rem;
+    color: var(--ok);
+    margin: 4px 0 6px;
+  }
+  .result-panel p{ margin: 0; font-size: 0.95rem; color: var(--muted); }
+
+  @media (prefers-reduced-motion: no-preference){
+    .back, button.submit-btn{ transition: color 0.15s ease, background 0.15s ease; }
+  }
+</style>
+</head>
+<body>
+  <div class="page">
+    <a class="back" href="index.html">&larr; Tất cả bài luyện tập</a>
+
+    <h1>Listening Practice 1</h1>
+    <p class="intro">Nghe từng đoạn audio bên dưới (có thể nghe lại nhiều lần), sau đó trả lời các câu hỏi ngay dưới đoạn đó. File chỉ nghe được trực tiếp trên trang, không tải xuống.</p>
+    <hr class="rule">
+
+    <h2 class="section-title">Thông tin sinh viên</h2>
+    <div class="student-info">
+      <div>
+        <label for="fullName">Full name (Tên đầy đủ)</label>
+        <input type="text" id="fullName" required>
+      </div>
+      <div>
+        <label for="studentId">Student ID number (Mã sinh viên)</label>
+        <input type="text" id="studentId" required>
+      </div>
+    </div>
+
+    <form id="quizForm">
+      <div id="audioGroups"></div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" id="submitBtn">Nộp bài</button>
+        <p class="form-msg" id="formMsg"></p>
+      </div>
+    </form>
+
+    <div class="result-panel" id="resultPanel">
+      <p>Điểm của bạn</p>
+      <p class="score" id="scoreText">0 / 0</p>
+      <p>Kết quả đã được ghi nhận. Giáo viên sẽ thông báo đáp án chi tiết sau.</p>
+    </div>
+  </div>
+
+  <iframe name="hidden_submit_frame" style="display:none;"></iframe>
+
+  <script>
+    var pictureLegend = [
+      { letter: "A", file: "images/A.png" },
+      { letter: "B", file: "images/B.png" },
+      { letter: "C", file: "images/C.png" },
+      { letter: "D", file: "images/D.png" },
+      { letter: "E", file: "images/E.png" },
+      { letter: "F", file: "images/F.png" }
+    ];
+
+    var audioGroups = [
+      {
+        title: "Listening 1",
+        file: "CD 1-2.mp3",
+        tasks: [
+          {
+            instruction: "Nghe. Chọn đáp án đúng.",
+            questions: [
+              { type: "mc", text: "Her name is ___.", choices: ["Alina Smith", "Elena Smith"], correct: 0 },
+              { type: "mc", text: "His name is ___.", choices: ["Matt Rosenblum", "Matt Rosenbloom"], correct: 0 },
+              { type: "mc", text: "His e-mail address is ___.", choices: ["mattnelson@tmail.com", "natwilson@tmail.com"], correct: 1 },
+              { type: "mc", text: "Her e-mail address is ___.", choices: ["coolgal@rol.com", "coolpal@rol.com"], correct: 0 },
+              { type: "mc", text: "His phone number is ___.", choices: ["555-2358", "555-2398"], correct: 1 },
+              { type: "mc", text: "Her phone number is ___.", choices: ["555-7126", "555-7216"], correct: 1 }
+            ]
+          }
+        ]
+      },
+      {
+        title: "Listening 2",
+        file: "CD 1-3.mp3",
+        tasks: [
+          {
+            label: "Task 1",
+            instruction: "Người ta đang chào nhau và hỏi thông tin. Nghe và chọn bức ảnh khớp với mỗi đoạn.",
+            legend: pictureLegend,
+            questions: [
+              { type: "mc", text: "Đoạn 1 khớp với bức ảnh nào?", choices: ["A", "B", "C", "D", "E", "F"], correct: 3 },
+              { type: "mc", text: "Đoạn 2 khớp với bức ảnh nào?", choices: ["A", "B", "C", "D", "E", "F"], correct: 4 },
+              { type: "mc", text: "Đoạn 3 khớp với bức ảnh nào?", choices: ["A", "B", "C", "D", "E", "F"], correct: 2 },
+              { type: "mc", text: "Đoạn 4 khớp với bức ảnh nào?", choices: ["A", "B", "C", "D", "E", "F"], correct: 0 },
+              { type: "mc", text: "Đoạn 5 khớp với bức ảnh nào?", choices: ["A", "B", "C", "D", "E", "F"], correct: 5 },
+              { type: "mc", text: "Đoạn 6 khớp với bức ảnh nào?", choices: ["A", "B", "C", "D", "E", "F"], correct: 1 }
+            ]
+          },
+          {
+            label: "Task 2",
+            instruction: "Nghe lại. Theo bạn, mỗi người sẽ nói gì tiếp theo? Chọn đáp án đúng.",
+            questions: [
+              { type: "mc", text: "1.", choices: ["I'm fine, thanks.", "Good morning.", "Nice to meet you, too."], correct: 2 },
+              { type: "mc", text: "2.", choices: ["It's 555-7591.", "It's sgomez@tmail.com", "G-O-M-E-Z."], correct: 1 },
+              { type: "mc", text: "3.", choices: ["What's your name?", "Nice to meet you.", "What's your address?"], correct: 0 },
+              { type: "mc", text: "4.", choices: ["How do you spell your name?", "What's your phone number?", "How are you?"], correct: 1 },
+              { type: "mc", text: "5.", choices: ["How do you spell your last name, please?", "It's nice to meet you.", "I'm fine, thanks."], correct: 0 },
+              { type: "mc", text: "6.", choices: ["What's your name?", "How do you spell your name?", "What's your e-mail address?"], correct: 2 }
+            ]
+          }
+        ]
+      },
+      {
+        title: "Listening 3",
+        file: "CD 1-4.mp3",
+        tasks: [
+          {
+            label: "Task 1",
+            instruction: "Người ta đang chào nhau. Nghe và viết tên mỗi người.",
+            questions: [
+              { type: "text", text: "Person 1:", correct: "elise" },
+              { type: "text", text: "Person 2:", correct: "mick" },
+              { type: "text", text: "Person 3:", correct: "hannah" },
+              { type: "text", text: "Person 4:", correct: "devon" },
+              { type: "text", text: "Person 5:", correct: "ike" },
+              { type: "text", text: "Person 6:", correct: "tandy" }
+            ]
+          },
+          {
+            label: "Task 2",
+            instruction: "Theo bạn, mỗi người quen biết nhau từ đâu? Chọn đáp án đúng.",
+            questions: [
+              { type: "mc", text: "1.", choices: ["from work", "from the gym", "from school", "from a friend's party", "from the boy's mother", "from the bus stop"], correct: 2 },
+              { type: "mc", text: "2.", choices: ["from work", "from the gym", "from school", "from a friend's party", "from the boy's mother", "from the bus stop"], correct: 1 },
+              { type: "mc", text: "3.", choices: ["from work", "from the gym", "from school", "from a friend's party", "from the boy's mother", "from the bus stop"], correct: 3 },
+              { type: "mc", text: "4.", choices: ["from work", "from the gym", "from school", "from a friend's party", "from the boy's mother", "from the bus stop"], correct: 5 },
+              { type: "mc", text: "5.", choices: ["from work", "from the gym", "from school", "from a friend's party", "from the boy's mother", "from the bus stop"], correct: 4 },
+              { type: "mc", text: "6.", choices: ["from work", "from the gym", "from school", "from a friend's party", "from the boy's mother", "from the bus stop"], correct: 0 }
+            ]
+          }
+        ]
+      }
+    ];
+
+    var FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSd_ZnHjw6TSd6HB6Fd13gMhwB2mKa-6jWbExft3bcpaVRr4nA/formResponse";
+    var ENTRY_NAME = "entry.256997324";
+    var ENTRY_ID = "entry.234044454";
+    var ENTRY_SCORE = "entry.670728282";
+
+    var container = document.getElementById("audioGroups");
+    var qCounter = 0;
+    var allQuestions = [];
+
+    audioGroups.forEach(function (group) {
+      var groupEl = document.createElement("div");
+      groupEl.className = "audio-group";
+
+      var titleEl = document.createElement("h2");
+      titleEl.className = "section-title";
+      titleEl.textContent = group.title;
+      groupEl.appendChild(titleEl);
+
+      var trackEl = document.createElement("div");
+      trackEl.className = "track";
+      trackEl.innerHTML =
+        '<p class="label">' + group.file.replace(".mp3", "") + '</p>' +
+        '<audio controls controlsList="nodownload noplaybackrate" oncontextmenu="return false;">' +
+        '<source src="' + group.file + '" type="audio/mpeg"></audio>';
+      groupEl.appendChild(trackEl);
+
+      group.tasks.forEach(function (task) {
+        if (task.label) {
+          var taskTitle = document.createElement("h3");
+          taskTitle.className = "task-title";
+          taskTitle.textContent = task.label;
+          groupEl.appendChild(taskTitle);
+        }
+
+        var instr = document.createElement("p");
+        instr.className = "task-instruction";
+        instr.textContent = task.instruction;
+        groupEl.appendChild(instr);
+
+        if (task.legend) {
+          var legendEl = document.createElement("div");
+          legendEl.className = "legend";
+          legendEl.innerHTML = task.legend.map(function (pic) {
+            return '<figure><img src="' + pic.file + '" alt="Picture ' + pic.letter + '" oncontextmenu="return false;">' +
+              '<figcaption>' + pic.letter + '</figcaption></figure>';
+          }).join("");
+          groupEl.appendChild(legendEl);
+        }
+
+        task.questions.forEach(function (q, qi) {
+          qCounter++;
+          var qId = "q" + qCounter;
+          allQuestions.push({ id: qId, q: q });
+
+          var block = document.createElement("div");
+          block.className = "question";
+
+          if (q.type === "mc") {
+            var choicesHtml = q.choices.map(function (choice, ci) {
+              return '<label class="choice">' +
+                '<input type="radio" name="' + qId + '" value="' + ci + '" required>' +
+                '<span>' + choice + '</span></label>';
+            }).join("");
+            block.innerHTML =
+              '<p class="q-text"><span class="q-num">' + (qi + 1) + '.</span>' + q.text + '</p>' +
+              '<div class="choices">' + choicesHtml + '</div>';
+          } else {
+            block.innerHTML =
+              '<p class="q-text"><span class="q-num">' + (qi + 1) + '.</span>' + q.text +
+              ' <input type="text" class="text-answer" id="' + qId + '" required></p>';
+          }
+
+          groupEl.appendChild(block);
+        });
+      });
+
+      container.appendChild(groupEl);
+    });
+
+    document.getElementById("quizForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      var name = document.getElementById("fullName").value.trim();
+      var id = document.getElementById("studentId").value.trim();
+      var msg = document.getElementById("formMsg");
+
+      if (!name || !id) {
+        msg.textContent = "Vui lòng điền tên và mã sinh viên.";
+        return;
+      }
+
+      var score = 0;
+      allQuestions.forEach(function (item) {
+        if (item.q.type === "mc") {
+          var picked = document.querySelector('input[name="' + item.id + '"]:checked');
+          if (picked && parseInt(picked.value, 10) === item.q.correct) score++;
+        } else {
+          var val = document.getElementById(item.id).value.trim().toLowerCase();
+          if (val === item.q.correct) score++;
+        }
+      });
+
+      var submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      msg.textContent = "Đang gửi kết quả...";
+
+      var formEl = document.createElement("form");
+      formEl.action = FORM_ACTION;
+      formEl.method = "POST";
+      formEl.target = "hidden_submit_frame";
+
+      function addField(entry, value) {
+        var input = document.createElement("input");
+        input.type = "hidden";
+        input.name = entry;
+        input.value = value;
+        formEl.appendChild(input);
+      }
+
+      addField(ENTRY_NAME, name);
+      addField(ENTRY_ID, id);
+      addField(ENTRY_SCORE, score + " / " + allQuestions.length);
+
+      document.body.appendChild(formEl);
+      formEl.submit();
+
+      setTimeout(function () {
+        msg.textContent = "Đã gửi kết quả.";
+        document.getElementById("scoreText").textContent = score + " / " + allQuestions.length;
+        document.getElementById("resultPanel").classList.add("show");
+        document.getElementById("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 800);
+    });
+  </script>
+</body>
+</html>
